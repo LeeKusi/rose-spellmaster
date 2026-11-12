@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>🌹 Rose Spell Master</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<style>
+:root{--primary:#6C5CE7;--primary-dark:#5A4BD1;--primary-light:#A29BFE;--secondary:#00CEC9;--success:#00B894;--danger:#E17055;--warning:#FDCB6E;--dark:#2D3436;--gray:#636E72;--light-gray:#DFE6E9;--bg:#F8F9FA;--card-bg:#FFFFFF;--text:#2D3436;--text-light:#636E72;--shadow:0 10px 40px rgba(108,92,231,0.12);--shadow-hover:0 20px 60px rgba(108,92,231,0.18);--radius:20px;--radius-sm:12px;--transition:all 0.3s cubic-bezier(0.4,0,0.2,1);--font:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;}
+[data-theme="dark"]{--bg:#0D1117;--card-bg:#161B22;--text:#E6EDF3;--text-light:#8B949E;--light-gray:#30363D;--shadow:0 10px 40px rgba(0,0,0,0.4);--shadow-hover:0 20px 60px rgba(0,0,0,0.6);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;transition:var(--transition);padding:16px;}
+.hidden{display:none!important;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border:none;border-radius:50px;font-family:var(--font);font-weight:600;font-size:.95rem;cursor:pointer;transition:var(--transition);text-decoration:none;}
+.btn-primary{background:var(--primary);color:white;box-shadow:0 4px 15px rgba(108,92,231,.3);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(108,92,231,.4);}
+.btn-success{background:var(--success);color:white;}
+.btn-danger{background:var(--danger);color:white;}
+.btn-outline{background:transparent;color:var(--primary);border:2px solid var(--primary);}
+.btn-outline:hover{background:var(--primary);color:white;}
+.btn-ghost{background:transparent;color:var(--text-light);}
+.btn-ghost:hover{background:var(--light-gray);color:var(--text);}
+.btn-sm{padding:8px 16px;font-size:.85rem;}
+.card{background:var(--card-bg);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);transition:var(--transition);margin-bottom:16px;}
+.card:hover{box-shadow:var(--shadow-hover);}
+.card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
+.card-title{font-size:1.1rem;font-weight:700;color:var(--text);}
+.card-subtitle{font-size:.85rem;color:var(--text-light);}
+.container{max-width:1200px;margin:0 auto;}
+.login-container{max-width:440px;margin:60px auto;padding:48px 40px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow);text-align:center;}
+.login-container h1{font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.login-container .form-group{margin-bottom:16px;text-align:left;}
+.login-container .form-group label{display:block;font-weight:600;font-size:.9rem;margin-bottom:4px;}
+.login-container .form-group input{width:100%;padding:14px 18px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-family:var(--font);font-size:1rem;background:var(--bg);color:var(--text);}
+.login-container .form-group input:focus{border-color:var(--primary);outline:none;}
+.login-container .btn{width:100%;justify-content:center;}
+.login-hint{margin-top:16px;font-size:.85rem;color:var(--text-light);}
+.login-hint strong{color:var(--primary);}
+.topbar{background:var(--card-bg);border-radius:var(--radius);padding:16px 24px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--shadow);flex-wrap:wrap;gap:12px;}
+.topbar-brand .logo-text{font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.topbar-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.user-badge{display:flex;align-items:center;gap:8px;padding:6px 16px 6px 12px;background:var(--bg);border-radius:50px;font-weight:600;font-size:.9rem;}
+.user-badge .avatar{width:32px;height:32px;border-radius:50%;background:var(--primary);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;}
+.admin-badge{background:var(--warning);color:var(--dark);padding:4px 12px;border-radius:50px;font-size:.75rem;font-weight:700;display:inline-flex;align-items:center;gap:4px;}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:16px;margin-bottom:24px;}
+.stat-card{background:var(--card-bg);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);text-align:center;}
+.stat-card .stat-value{font-size:2rem;font-weight:800;color:var(--text);}
+.stat-card .stat-label{font-size:.85rem;color:var(--text-light);}
+.tabs{display:flex;gap:4px;background:var(--card-bg);border-radius:var(--radius);padding:6px;margin-bottom:24px;box-shadow:var(--shadow);overflow-x:auto;flex-wrap:wrap;}
+.tab-btn{padding:10px 16px;border:none;background:transparent;border-radius:var(--radius-sm);font-family:var(--font);font-weight:600;font-size:.85rem;color:var(--text-light);cursor:pointer;transition:var(--transition);white-space:nowrap;display:flex;align-items:center;gap:6px;}
+.tab-btn:hover{background:var(--bg);color:var(--text);}
+.tab-btn.active{background:var(--primary);color:white;}
+.tab-content{display:none;animation:fadeIn .3s ease;}
+.tab-content.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.word-display{background:var(--card-bg);border-radius:var(--radius);padding:40px 24px;text-align:center;margin-bottom:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.word-display .word-text{font-size:4rem;font-weight:800;color:var(--text);}
+.word-display .word-hint{font-size:1rem;color:var(--text-light);margin-top:8px;}
+.word-display .word-category{position:absolute;top:16px;right:16px;font-size:.8rem;background:var(--primary);color:white;padding:4px 14px;border-radius:50px;}
+.word-display.correct{border:3px solid var(--success);}
+.word-display.wrong{border:3px solid var(--danger);}
+.word-display.listening{border:3px solid var(--primary);animation:pulse 1.5s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(108,92,231,.2);}50%{box-shadow:0 0 0 20px rgba(108,92,231,0);}}
+.category-selector{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;}
+.category-btn{padding:8px 16px;border:2px solid var(--light-gray);border-radius:50px;background:var(--bg);font-family:var(--font);font-weight:600;font-size:.8rem;color:var(--text-light);cursor:pointer;transition:var(--transition);}
+.category-btn:hover{border-color:var(--primary);color:var(--primary);}
+.category-btn.active{background:var(--primary);color:white;border-color:var(--primary);}
+.game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-top:16px;}
+.game-card{background:var(--card-bg);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);text-align:center;cursor:pointer;transition:var(--transition);border:2px solid transparent;}
+.game-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover);border-color:var(--primary);}
+.game-card .game-icon{font-size:2.5rem;margin-bottom:8px;}
+.game-card .game-name{font-size:1.1rem;font-weight:700;}
+.game-card .game-desc{font-size:.8rem;color:var(--text-light);margin-top:4px;}
+.game-card .game-age{font-size:.7rem;background:var(--primary-light);color:white;padding:2px 10px;border-radius:50px;display:inline-block;margin-top:8px;}
+.game-area{background:var(--card-bg);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);margin-top:16px;}
+.game-area .game-question{font-size:1.3rem;font-weight:600;margin-bottom:16px;}
+.game-area .game-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;}
+.game-area .game-options .option-btn{padding:14px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);background:var(--bg);font-family:var(--font);font-size:1rem;cursor:pointer;transition:var(--transition);text-align:center;}
+.game-area .game-options .option-btn:hover{border-color:var(--primary);background:var(--primary-light);color:white;}
+.game-area .game-options .option-btn.correct{border-color:var(--success);background:var(--success);color:white;}
+.game-area .game-options .option-btn.wrong{border-color:var(--danger);background:var(--danger);color:white;}
+.game-area .game-options .option-btn.disabled{pointer-events:none;opacity:.6;}
+.hangman-display{font-size:3rem;text-align:center;padding:16px;font-family:monospace;line-height:1.4;min-height:150px;background:var(--bg);border-radius:var(--radius-sm);margin-bottom:16px;white-space:pre;}
+.balloon-container{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;padding:20px;min-height:200px;}
+.balloon{font-size:3.5rem;cursor:pointer;transition:var(--transition);animation:float 2s ease-in-out infinite;}
+.balloon:hover{transform:scale(1.2);}
+.balloon.popped{opacity:.3;pointer-events:none;}
+@keyframes float{0%,100%{transform:translateY(0px);}50%{transform:translateY(-10px);}}
+.word-search-grid{display:grid;gap:4px;max-width:400px;margin:0 auto;}
+.word-search-grid .cell{padding:12px 8px;text-align:center;border:1px solid var(--light-gray);border-radius:4px;font-weight:700;font-size:1.1rem;background:var(--bg);cursor:pointer;transition:var(--transition);}
+.word-search-grid .cell:hover{background:var(--primary-light);color:white;}
+.word-search-grid .cell.found{background:var(--success);color:white;border-color:var(--success);}
+.web-connect-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:400px;margin:0 auto;}
+.web-connect-grid .node{padding:16px;text-align:center;border:2px solid var(--light-gray);border-radius:50%;font-weight:700;font-size:1.5rem;background:var(--bg);cursor:pointer;transition:var(--transition);aspect-ratio:1;display:flex;align-items:center;justify-content:center;}
+.web-connect-grid .node:hover{border-color:var(--primary);background:var(--primary-light);color:white;}
+.web-connect-grid .node.selected{border-color:var(--primary);background:var(--primary);color:white;}
+.web-connect-grid .node.connected{border-color:var(--success);background:var(--success);color:white;}
+.web-connect-grid .node.wrong{border-color:var(--danger);background:var(--danger);color:white;}
+.missing-word{font-size:2.5rem;font-weight:700;letter-spacing:8px;padding:16px;text-align:center;background:var(--bg);border-radius:var(--radius-sm);margin-bottom:16px;}
+.missing-word .blank{display:inline-block;width:40px;height:50px;border-bottom:4px solid var(--primary);margin:0 4px;}
+.missing-word .filled{display:inline-block;width:40px;height:50px;border-bottom:4px solid var(--success);margin:0 4px;color:var(--success);}
+.letter-options{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:16px;}
+.letter-options .letter-btn{padding:12px 20px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-family:var(--font);font-size:1.3rem;font-weight:700;cursor:pointer;transition:var(--transition);background:var(--bg);min-width:50px;}
+.letter-options .letter-btn:hover{border-color:var(--primary);background:var(--primary-light);color:white;}
+.letter-options .letter-btn.used{opacity:.3;pointer-events:none;}
+.letter-options .letter-btn.correct{border-color:var(--success);background:var(--success);color:white;}
+.letter-options .letter-btn.wrong{border-color:var(--danger);background:var(--danger);color:white;}
+.crossword-grid{display:grid;gap:4px;max-width:500px;margin:0 auto;}
+.crossword-grid .cell{padding:12px 8px;text-align:center;border:1px solid var(--light-gray);border-radius:4px;font-weight:700;font-size:1.3rem;background:var(--bg);aspect-ratio:1;min-height:45px;}
+.crossword-grid .cell.blocked{background:var(--dark);border-color:var(--dark);}
+.crossword-grid .cell input{width:100%;height:100%;border:none;background:transparent;text-align:center;font-size:1.3rem;font-weight:700;font-family:var(--font);color:var(--text);outline:none;}
+.missed-container{display:flex;flex-wrap:wrap;gap:8px;padding:4px 0;}
+.missed-tag{background:rgba(225,112,85,.12);color:var(--danger);padding:6px 16px;border-radius:50px;font-weight:600;font-size:.9rem;display:inline-flex;align-items:center;gap:6px;}
+.user-list{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;}
+.user-tag{background:var(--bg);padding:6px 16px;border-radius:50px;border:1px solid var(--light-gray);font-size:.9rem;display:flex;align-items:center;gap:6px;}
+.user-tag .delete-user{background:none;border:none;color:var(--danger);cursor:pointer;font-size:1rem;padding:0 4px;}
+.input-group{display:flex;gap:12px;align-items:center;background:var(--bg);border-radius:50px;padding:4px;border:2px solid var(--light-gray);transition:var(--transition);flex-wrap:wrap;}
+.input-group:focus-within{border-color:var(--primary);box-shadow:0 0 0 4px rgba(108,92,231,.1);}
+.input-group input{flex:1;border:none;background:transparent;padding:12px 18px;font-family:var(--font);font-size:.95rem;color:var(--text);outline:none;min-width:80px;}
+.input-group .btn{border-radius:50px;flex-shrink:0;}
+select{padding:10px 16px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-family:var(--font);font-size:.95rem;background:var(--bg);color:var(--text);cursor:pointer;transition:var(--transition);}
+select:focus{border-color:var(--primary);outline:none;}
+.settings-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;}
+.settings-group{background:var(--bg);border-radius:var(--radius-sm);padding:16px;}
+.settings-group label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px;}
+.settings-group select{width:100%;}
+.action-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:16px;}
+.action-grid .btn{justify-content:center;padding:12px;}
+.mt-16{margin-top:16px;}
+.mb-16{margin-bottom:16px;}
+.text-center{text-align:center;}
+.flex-between{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+@media(max-width:768px){
+.word-display .word-text{font-size:2.5rem;}
+.stats-grid{grid-template-columns:repeat(2,1fr);}
+.tabs{flex-wrap:nowrap;overflow-x:auto;}
+.tab-btn{padding:8px 12px;font-size:.75rem;}
+.game-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
+.login-container{margin:30px auto;padding:32px 24px;}
+.topbar{flex-direction:column;align-items:stretch;}
+.topbar-actions{justify-content:space-between;}
+.game-area .game-options{grid-template-columns:1fr;}
+.web-connect-grid{grid-template-columns:repeat(3,1fr);}
+.crossword-grid .cell{font-size:1rem;min-height:35px;}
+.word-search-grid .cell{font-size:.9rem;padding:8px 4px;}
+}
+@media(max-width:480px){
+.word-display .word-text{font-size:2rem;}
+.stats-grid{grid-template-columns:1fr 1fr;gap:8px;}
+.stat-card{padding:14px;}
+.stat-card .stat-value{font-size:1.2rem;}
+.game-grid{grid-template-columns:1fr 1fr;}
+.game-card{padding:14px;}
+.game-card .game-icon{font-size:2rem;}
+.game-card .game-name{font-size:.9rem;}
+.missing-word{font-size:1.8rem;letter-spacing:4px;}
+.missing-word .blank,.missing-word .filled{width:30px;height:40px;}
+.letter-options .letter-btn{padding:8px 14px;font-size:1rem;min-width:40px;}
+.hangman-display{font-size:2rem;min-height:100px;}
+.web-connect-grid{grid-template-columns:repeat(3,1fr);gap:6px;}
+.web-connect-grid .node{font-size:1.2rem;padding:12px;}
+}
+.chat-widget{position:fixed;bottom:24px;right:24px;z-index:9999;}
+.chat-toggle{width:60px;height:60px;border-radius:50%;background:var(--primary);color:white;border:none;font-size:1.5rem;cursor:pointer;box-shadow:var(--shadow-hover);transition:var(--transition);position:relative;}
+.chat-toggle:hover{transform:scale(1.1);}
+.chat-window{position:absolute;bottom:80px;right:0;width:360px;max-height:480px;background:var(--card-bg);border-radius:var(--radius);box-shadow:var(--shadow-hover);display:none;flex-direction:column;overflow:hidden;}
+.chat-window.open{display:flex;}
+.chat-window .chat-header{padding:16px 20px;background:var(--primary);color:white;display:flex;justify-content:space-between;align-items:center;font-weight:700;}
+.chat-window .chat-header .close{background:none;border:none;color:white;font-size:1.2rem;cursor:pointer;}
+.chat-window .chat-messages{flex:1;padding:16px;overflow-y:auto;max-height:320px;min-height:200px;}
+.chat-window .chat-messages .msg{margin-bottom:8px;padding:8px 14px;border-radius:var(--radius-sm);max-width:85%;font-size:.9rem;}
+.chat-window .chat-messages .msg.user{background:var(--primary);color:white;margin-left:auto;}
+.chat-window .chat-messages .msg.admin{background:var(--bg);color:var(--text);}
+.chat-window .chat-input{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--light-gray);}
+.chat-window .chat-input input{flex:1;padding:10px 14px;border:2px solid var(--light-gray);border-radius:50px;font-family:var(--font);background:var(--bg);color:var(--text);outline:none;}
+.chat-window .chat-input .btn{padding:10px 18px;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-container">
+    <div style="font-size:4rem;">🌹</div>
+    <h1>Rose Spell Master</h1>
+    <p style="color:var(--text-light);margin-bottom:24px;">Learn • Practice • Master</p>
+    <div class="form-group">
+      <label for="loginUsername">👤 Username</label>
+      <input type="text" id="loginUsername" placeholder="Enter your username" />
+    </div>
+    <div class="form-group">
+      <label for="loginPassword">🔑 Password</label>
+      <input type="password" id="loginPassword" placeholder="Enter your password" />
+    </div>
+    <button class="btn btn-primary" id="loginBtn"><i class="fas fa-arrow-right"></i> Login</button>
+    <p id="loginError" style="color:var(--danger);margin-top:12px;font-weight:600;"></p>
+    <p class="login-hint">🔑 Forgot password? Ask your <strong>teacher/admin</strong> to reset it.</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="appScreen" class="hidden">
+  <div class="container">
+    <header class="topbar">
+      <div class="topbar-brand">
+        <span class="logo-text">🌹 Rose Spell Master</span>
+        <span style="font-size:0.7rem;background:var(--primary);color:white;padding:2px 10px;border-radius:50px;">v4.0 Cloud</span>
+        <button class="btn btn-sm btn-ghost" id="darkModeToggle" title="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
+      </div>
+      <div class="topbar-actions">
+        <span class="admin-badge hidden" id="adminBadge">👑 ADMIN</span>
+        <span class="user-badge"><span class="avatar" id="userAvatar">A</span><span id="userName">Admin</span></span>
+        <button class="btn btn-sm btn-outline" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+      </div>
+    </header>
+
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-value" id="statCorrect">0</div><div class="stat-label">✅ Correct</div></div>
+      <div class="stat-card"><div class="stat-value" id="statWrong">0</div><div class="stat-label">❌ Incorrect</div></div>
+      <div class="stat-card"><div class="stat-value" id="statStreak">0</div><div class="stat-label">⭐ Streak</div></div>
+      <div class="stat-card"><div class="stat-value" id="statAccuracy">0%</div><div class="stat-label">📈 Accuracy</div></div>
+      <div class="stat-card"><div class="stat-value" id="statTotal">0</div><div class="stat-label">📝 Total</div></div>
+      <div class="stat-card"><div class="stat-value" id="statMissed">0</div><div class="stat-label">🎯 Missed</div></div>
+    </div>
+
+    <div class="tabs" id="tabBar">
+      <button class="tab-btn active" data-tab="spell"><i class="fas fa-pen"></i> Spell</button>
+      <button class="tab-btn" data-tab="games"><i class="fas fa-gamepad"></i> Games</button>
+      <button class="tab-btn" data-tab="categories"><i class="fas fa-tags"></i> Categories</button>
+      <button class="tab-btn" data-tab="stats"><i class="fas fa-chart-bar"></i> Stats</button>
+      <button class="tab-btn" data-tab="leaderboard"><i class="fas fa-trophy"></i> Leaderboard</button>
+      <button class="tab-btn" data-tab="settings"><i class="fas fa-cog"></i> Settings</button>
+      <button class="tab-btn hidden" data-tab="admin" id="adminTabBtn"><i class="fas fa-user-cog"></i> Admin</button>
+    </div>
+
+    <!-- SPELL -->
+    <div id="spellTab" class="tab-content active">
+      <div class="word-display" id="wordDisplay">
+        <div class="word-category" id="wordCategory">📚 Category</div>
+        <div class="word-text" id="wordText">Tap "Listen"</div>
+        <div class="word-hint" id="wordHint">💡 Press Listen to hear a word</div>
+      </div>
+      <div class="category-selector">
+        <button class="category-btn active" data-category="all">📚 All</button>
+        <button class="category-btn" data-category="3-letter">🔤 3-Letter</button>
+        <button class="category-btn" data-category="digraphs">🔗 Digraphs</button>
+        <button class="category-btn" data-category="vowel-teams">🔊 Vowel Teams</button>
+        <button class="category-btn" data-category="consonant-patterns">📖 Patterns</button>
+        <button class="category-btn" data-category="grade-5-6">🎓 Grade 5-6</button>
+      </div>
+      <div class="action-grid">
+        <button class="btn btn-primary" id="listenBtn"><i class="fas fa-volume-up"></i> Listen</button>
+        <button class="btn btn-outline" id="nextBtn"><i class="fas fa-forward"></i> Next</button>
+      </div>
+      <div class="input-group">
+        <input type="text" id="userInput" placeholder="Type the word..." autocomplete="off" />
+        <button class="btn btn-success" id="checkBtn"><i class="fas fa-check"></i> Check</button>
+      </div>
+      <div id="feedback" style="padding:12px;text-align:center;font-weight:500;min-height:48px;border-radius:var(--radius-sm);margin-top:12px;background:var(--bg);">💡 Type the word and press Check</div>
+      <div class="card mt-16">
+        <div class="card-header">
+          <span class="card-title">🔴 Words to Practice</span>
+          <span class="card-subtitle" id="missedCount">0 words</span>
+        </div>
+        <div class="missed-container" id="missedTags"><span style="color:var(--text-light);">🌟 No missed words! Great job!</span></div>
+      </div>
+    </div>
+
+    <!-- GAMES -->
+    <div id="gamesTab" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">🎮 Spelling Games</span>
+          <span class="card-subtitle">Learn while having fun!</span>
+        </div>
+        <div class="game-grid" id="gameSelector">
+          <div class="game-card" onclick="startGame('match')"><div class="game-icon">🧩</div><div class="game-name">Word Match</div><div class="game-desc">Match words to meanings</div><div class="game-age">👶 5-10 years</div></div>
+          <div class="game-card" onclick="startGame('gap')"><div class="game-icon">📝</div><div class="game-name">Gap Fill</div><div class="game-desc">Fill in missing words</div><div class="game-age">👦 7-12 years</div></div>
+          <div class="game-card" onclick="startGame('bee')"><div class="game-icon">🐝</div><div class="game-name">Spelling Bee</div><div class="game-desc">Type the word you hear</div><div class="game-age">👦 6-14 years</div></div>
+          <div class="game-card" onclick="startGame('crossword')"><div class="game-icon">🔍</div><div class="game-name">Crossword</div><div class="game-desc">Complete the puzzle</div><div class="game-age">🧒 8-14 years</div></div>
+          <div class="game-card" onclick="startGame('wordsearch')"><div class="game-icon">🔎</div><div class="game-name">Word Search</div><div class="game-desc">Find hidden words</div><div class="game-age">👦 6-12 years</div></div>
+          <div class="game-card" onclick="startGame('balloon')"><div class="game-icon">🎈</div><div class="game-name">Balloon Pop</div><div class="game-desc">Pop the correct words</div><div class="game-age">👶 5-8 years</div></div>
+          <div class="game-card" onclick="startGame('hangman')"><div class="game-icon">💀</div><div class="game-name">Hangman</div><div class="game-desc">Guess the word</div><div class="game-age">🧒 7-14 years</div></div>
+          <div class="game-card" onclick="startGame('webconnect')"><div class="game-icon">🌐</div><div class="game-name">Web Connect</div><div class="game-desc">Connect letters to spell</div><div class="game-age">👦 6-10 years</div></div>
+          <div class="game-card" onclick="startGame('missing')"><div class="game-icon">🔤</div><div class="game-name">Missing Letters</div><div class="game-desc">Fill in the blanks</div><div class="game-age">👶 5-10 years</div></div>
+        </div>
+        <div id="gameArea" class="game-area" style="display:none;">
+          <div class="flex-between">
+            <span class="card-title" id="gameTitle">🎮 Game</span>
+            <span style="color:var(--text-light);" id="gameScore">Score: 0</span>
+            <span style="color:var(--text-light);" id="gameRound">Round: 0/10</span>
+            <button class="btn btn-sm btn-danger" onclick="endGame()"><i class="fas fa-times"></i> End</button>
+          </div>
+          <div id="gameContent" style="margin-top:12px;"><p style="color:var(--text-light);text-align:center;">Loading game...</p></div>
+          <div id="gameFeedback" style="margin-top:12px;padding:12px;border-radius:var(--radius-sm);background:var(--bg);text-align:center;font-weight:500;min-height:48px;">💡 Ready to play!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div id="categoriesTab" class="tab-content">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">📚 Word Categories</span>
+          <span class="card-subtitle" id="catWordCount">0 words total</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+          <div class="settings-group" style="cursor:pointer;" onclick="selectCategory('3-letter')"><h4>🔤 3-Letter Words</h4><p style="font-size:0.85rem;color:var(--text-light);">Vowel in the middle</p><span id="count-3-letter" style="background:var(--primary);color:white;padding:2px 12px;border-radius:50px;font-size:0.8rem;">0</span></div>
+          <div class="settings-group" style="cursor:pointer;" onclick="selectCategory('digraphs')"><h4>🔗 Digraphs</h4><p style="font-size:0.85rem;color:var(--text-light);">oo, ee, sh, ch, tch</p><span id="count-digraphs" style="background:var(--primary);color:white;padding:2px 12px;border-radius:50px;font-size:0.8rem;">0</span></div>
+          <div class="settings-group" style="cursor:pointer;" onclick="selectCategory('vowel-teams')"><h4>🔊 Vowel Teams</h4><p style="font-size:0.85rem;color:var(--text-light);">ea, oa, ai, au, ou, oi, ur, er, ir, or, ar</p><span id="count-vowel-teams" style="background:var(--primary);color:white;padding:2px 12px;border-radius:50px;font-size:0.8rem;">0</span></div>
+          <div class="settings-group" style="cursor:pointer;" onclick="selectCategory('consonant-patterns')"><h4>📖 Consonant Patterns</h4><p style="font-size:0.85rem;color:var(--text-light);">ck, kn, ph, wr, th</p><span id="count-consonant-patterns" style="background:var(--primary);color:white;padding:2px 12px;border-radius:50px;font-size:0.8rem;">0</span></div>
+          <div class="settings-group" style="cursor:pointer;" onclick="selectCategory('grade-5-6')"><h4>🎓 Grade 5-6</h4><p style="font-size:0.85rem;color:var(--text-light);">Random words with difficulty</p><span id="count-grade-5-6" style="background:var(--primary);color:white;padding:2px 12px;border-radius:50px;font-size:0.8rem;">0</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">📝 Words in Category</span><span class="card-subtitle" id="selectedCatName">All Words</span></div>
+        <div id="categoryWordList" style="max-height:400px;overflow-y:auto;"><span style="color:var(--text-light);">Select a category</span></div>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div id="statsTab" class="tab-content">
+      <div class="card mb-16">
+        <div class="card-header"><span class="card-title">📊 Your Progress</span><button class="btn btn-sm btn-danger" id="resetStatsBtn"><i class="fas fa-redo"></i> Reset My Stats</button></div>
+        <div class="stats-grid" style="grid-template-columns:repeat(auto-fit,minmax(120px,1fr));">
+          <div class="stat-card"><div class="stat-value" id="statsCorrect">0</div><div class="stat-label">✅ Correct</div></div>
+          <div class="stat-card"><div class="stat-value" id="statsWrong">0</div><div class="stat-label">❌ Incorrect</div></div>
+          <div class="stat-card"><div class="stat-value" id="statsAccuracy">0%</div><div class="stat-label">📈 Accuracy</div></div>
+          <div class="stat-card"><div class="stat-value" id="statsStreak">0</div><div class="stat-label">⭐ Streak</div></div>
+          <div class="stat-card"><div class="stat-value" id="statsTotal">0</div><div class="stat-label">📝 Total</div></div>
+          <div class="stat-card"><div class="stat-value" id="statsLearned">0</div><div class="stat-label">📚 Learned</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">🔴 Words to Practice</span><span class="card-subtitle" id="statsMissedCount">0 words</span></div>
+        <div class="missed-container" id="statsMissedTags"><span style="color:var(--text-light);">🌟 No missed words!</span></div>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div id="leaderboardTab" class="tab-content">
+      <div class="card">
+        <div class="card-header"><span class="card-title">🏆 Global Leaderboard</span><span class="card-subtitle" style="color:var(--success);" id="syncStatus">☁️ Synced to Cloud</span></div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;">
+            <thead><tr>
+              <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--light-gray);">Rank</th>
+              <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--light-gray);">User</th>
+              <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--light-gray);">✅ Correct</th>
+              <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--light-gray);">📈 Accuracy</th>
+              <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--light-gray);">⭐ Streak</th>
+              <th style="padding:10px 14px;text-align:left;border-bottom:1px solid var(--light-gray);">🏅 Score</th>
+            </tr></thead>
+            <tbody id="leaderboardBody"><tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text-light);">Loading from Cloud...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="settingsTab" class="tab-content">
+      <div class="card mb-16">
+        <div class="card-header"><span class="card-title">⚙️ Settings</span></div>
+        <div class="settings-grid">
+          <div class="settings-group"><label>🗣️ Voice Gender</label><select id="voiceGender"><option value="female">Female</option><option value="male">Male</option></select></div>
+          <div class="settings-group"><label>🌍 Voice Accent</label><select id="voiceAccent"><option value="en-US">American</option><option value="en-GB">British</option><option value="en-AU">Australian</option></select></div>
+          <div class="settings-group"><label>🔊 Speech Rate</label><select id="speechRate"><option value="0.5">Very Slow</option><option value="0.7" selected>Slow</option><option value="1.0">Normal</option><option value="1.3">Fast</option></select></div>
+          <div class="settings-group"><label>🎨 Color Theme</label>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="color-btn active" style="width:36px;height:36px;border-radius:50%;border:3px solid var(--text);background:#6C5CE7;cursor:pointer;" data-color="purple"></button>
+              <button class="color-btn" style="width:36px;height:36px;border-radius:50%;border:3px solid transparent;background:#0984E3;cursor:pointer;" data-color="blue"></button>
+              <button class="color-btn" style="width:36px;height:36px;border-radius:50%;border:3px solid transparent;background:#00B894;cursor:pointer;" data-color="green"></button>
+              <button class="color-btn" style="width:36px;height:36px;border-radius:50%;border:3px solid transparent;background:#E17055;cursor:pointer;" data-color="red"></button>
+              <button class="color-btn" style="width:36px;height:36px;border-radius:50%;border:3px solid transparent;background:#E84393;cursor:pointer;" data-color="pink"></button>
+              <button class="color-btn" style="width:36px;height:36px;border-radius:50%;border:3px solid transparent;background:#00CEC9;cursor:pointer;" data-color="teal"></button>
+            </div>
+          </div>
+          <div class="settings-group"><label>📏 Font Size</label><select id="fontSize"><option value="100%">Normal</option><option value="120%">Large</option><option value="150%" selected>Extra Large</option><option value="200%">Huge</option></select></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">🔑 Change My Password</span></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <input type="password" id="currentPassword" placeholder="Current password" style="flex:1;padding:12px 16px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-family:var(--font);background:var(--bg);color:var(--text);min-width:150px;" />
+          <input type="password" id="newPassword" placeholder="New password" style="flex:1;padding:12px 16px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-family:var(--font);background:var(--bg);color:var(--text);min-width:150px;" />
+          <button class="btn btn-success" id="changePasswordBtn"><i class="fas fa-save"></i> Change</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="adminTab" class="tab-content">
+      <div class="card mb-16" style="border:2px solid var(--warning);">
+        <div class="card-header"><span class="card-title">👑 Admin Panel</span><span class="admin-badge">🔒 ADMIN ONLY</span></div>
+        <p style="color:var(--text-light);font-size:0.9rem;">Only teachers/admins can access this section. Changes sync to the Cloud.</p>
+      </div>
+      <div class="card mb-16">
+        <div class="card-header"><span class="card-title">👥 User Management</span></div>
+        <div class="user-list" id="userList"><span style="color:var(--text-light);">Loading users from Cloud...</span></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;">
+          <input type="text" id="newAdminUsername" placeholder="Username" style="flex:1;padding:10px 14px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-family:var(--font);background:var(--bg);color:var(--text);min-width:100px;" />
+          <input type="text" id="newAdminPassword" placeholder="Password" style="flex:1;padding:10px 14px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-family:var(--font);background:var(--bg);color:var(--text);min-width:100px;" />
+          <select id="newAdminRole" style="padding:10px 14px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-family:var(--font);background:var(--bg);color:var(--text);"><option value="student">Student</option><option value="teacher">Teacher</option></select>
+          <button class="btn btn-success" id="createUserBtn"><i class="fas fa-plus"></i> Create User</button>
+        </div>
+      </div>
+      <div class="card mb-16">
+        <div class="card-header"><span class="card-title">🔑 Reset User Password</span></div>
+        <p style="color:var(--text-light);font-size:0.9rem;margin-bottom:12px;">If a student forgets their password, reset it here.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <select id="resetUserSelect" style="flex:1;padding:10px 14px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-family:var(--font);background:var(--bg);color:var(--text);min-width:150px;"><option value="">-- Select User --</option></select>
+          <input type="text" id="resetNewPassword" placeholder="New password" style="flex:1;padding:10px 14px;border:2px solid var(--light-gray);border-radius:var(--radius-sm);font-family:var(--font);background:var(--bg);color:var(--text);min-width:150px;" />
+          <button class="btn btn-primary" id="resetPasswordBtn"><i class="fas fa-key"></i> Reset Password</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CHAT -->
+<div class="chat-widget">
+  <button class="chat-toggle" id="chatToggle"><i class="fas fa-comment"></i></button>
+  <div class="chat-window" id="chatWindow">
+    <div class="chat-header"><span>💬 Support Chat</span><button class="close" id="chatClose"><i class="fas fa-times"></i></button></div>
+    <div class="chat-messages" id="chatMessages"><div class="msg admin">👋 Welcome to Rose Spell Master! Ask your teacher if you need help with your password.</div></div>
+    <div class="chat-input"><input type="text" id="chatInput" placeholder="Type your message..." /><button class="btn btn-primary btn-sm" id="chatSendBtn"><i class="fas fa-paper-plane"></i></button></div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- FIREBASE SDK CONFIGURATION                 -->
+<!-- ========================================== -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+  import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+
+  // YOUR SPECIFIC FIREBASE CONFIG
+  const firebaseConfig = {
+    apiKey: "AIzaSyDn714pREXsDyEDXfdYBohyMEyEiyKhTXA",
+    authDomain: "rose-spellmaster.firebaseapp.com",
+    projectId: "rose-spellmaster",
+    storageBucket: "rose-spellmaster.firebasestorage.app",
+    messagingSenderId: "527742641016",
+    appId: "1:527742641016:web:42f05ff18ab4edad8ade8d",
+    measurementId: "G-4K4188T3TD"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  // Authenticate anonymously so Firestore Security Rules work
+  signInAnonymously(auth)
+    .then(() => {
+      console.log("🔥 Firebase Authenticated & Connected!");
+      
+      // Expose to window so the main script can use them
+      window.fireDB = { db, doc, setDoc, getDoc, collection, getDocs, deleteDoc };
+      
+      // Dispatch an event to let the main script know Firebase is ready
+      window.dispatchEvent(new Event('firebaseReady'));
+    })
+    .catch((error) => {
+      console.error("Auth Error:", error);
+      alert("Database connection failed. Did you enable Anonymous Auth in Firebase?");
+    });
+</script>
+
+<!-- ========================================== -->
+<!-- MAIN APPLICATION LOGIC                     -->
+<!-- ========================================== -->
+<script>
+// ================================================================
+// ROSE SPELL MASTER v4.0 - CLOUD EDITION
+// ================================================================
+
+const WORD_CATEGORIES = {
+  '3-letter': { name: '3-Letter Words', words: [
+    {word:'cat',hint:'a furry pet'},{word:'dog',hint:'man\'s best friend'},{word:'sun',hint:'shines in the sky'},
+    {word:'fish',hint:'swims in water'},{word:'book',hint:'you read it'},{word:'tree',hint:'has leaves'},
+    {word:'star',hint:'twinkles at night'},{word:'moon',hint:'glows in the dark'},{word:'rain',hint:'water from clouds'},
+    {word:'snow',hint:'cold white flakes'},{word:'ball',hint:'round toy'},{word:'cake',hint:'sweet dessert'},
+    {word:'game',hint:'fun activity'},{word:'hat',hint:'worn on head'},{word:'jar',hint:'glass container'},
+    {word:'key',hint:'opens locks'},{word:'leg',hint:'body part'},{word:'map',hint:'shows locations'},
+    {word:'net',hint:'catching tool'},{word:'owl',hint:'night bird'},{word:'pen',hint:'writing tool'},
+    {word:'rat',hint:'small rodent'},{word:'sad',hint:'not happy'},{word:'toy',hint:'plaything'},{word:'van',hint:'large vehicle'}
+  ]},
+  'digraphs': { name: 'Digraphs', words: [
+    {word:'book',hint:'you read it'},{word:'look',hint:'see with eyes'},{word:'cook',hint:'prepare food'},
+    {word:'moon',hint:'glows at night'},{word:'soon',hint:'in a short time'},{word:'foot',hint:'body part'},
+    {word:'good',hint:'opposite of bad'},{word:'wood',hint:'from trees'},{word:'school',hint:'place to learn'},
+    {word:'shark',hint:'big fish'},{word:'ship',hint:'large boat'},{word:'shop',hint:'place to buy'},
+    {word:'fish',hint:'swims in water'},{word:'shell',hint:'on the beach'},{word:'chicken',hint:'farm bird'},
+    {word:'church',hint:'place of worship'},{word:'cheese',hint:'dairy product'},{word:'watch',hint:'tells time'},
+    {word:'catch',hint:'grab something'},{word:'match',hint:'for lighting'},{word:'patch',hint:'piece of fabric'},
+    {word:'stretch',hint:'extend'},{word:'kitchen',hint:'cooking room'}
+  ]},
+  'vowel-teams': { name: 'Vowel Teams', words: [
+    {word:'beach',hint:'sandy shore'},{word:'teach',hint:'instruct'},{word:'reach',hint:'stretch to get'},
+    {word:'speak',hint:'say something'},{word:'clean',hint:'not dirty'},{word:'boat',hint:'floats on water'},
+    {word:'coat',hint:'worn outside'},{word:'road',hint:'for driving'},{word:'rain',hint:'water from sky'},
+    {word:'wait',hint:'stay until'},{word:'snail',hint:'slow creature'},{word:'paint',hint:'colored liquid'},
+    {word:'author',hint:'writes books'},{word:'because',hint:'since'},{word:'cloud',hint:'in the sky'},
+    {word:'house',hint:'where you live'},{word:'mouse',hint:'small rodent'},{word:'sound',hint:'what you hear'},
+    {word:'round',hint:'circle shape'},{word:'ground',hint:'earth surface'},{word:'voice',hint:'speaking sound'},
+    {word:'coin',hint:'money'},{word:'boil',hint:'heat liquid'},{word:'oil',hint:'cooking liquid'},
+    {word:'burn',hint:'set on fire'},{word:'turn',hint:'rotate'},{word:'nurse',hint:'cares for sick'},
+    {word:'purpose',hint:'reason'},{word:'her',hint:'belongs to she'},{word:'bird',hint:'has wings'},
+    {word:'first',hint:'number one'},{word:'girl',hint:'female child'},{word:'word',hint:'unit of language'},
+    {word:'work',hint:'do a job'},{word:'world',hint:'planet earth'},{word:'car',hint:'vehicle'},
+    {word:'star',hint:'twinkles at night'},{word:'garden',hint:'grows plants'}
+  ]},
+  'consonant-patterns': { name: 'Consonant Patterns', words: [
+    {word:'back',hint:'opposite of front'},{word:'chick',hint:'baby bird'},{word:'duck',hint:'water bird'},
+    {word:'lock',hint:'secures door'},{word:'rock',hint:'stone'},{word:'sock',hint:'worn on foot'},
+    {word:'knight',hint:'medieval warrior'},{word:'knife',hint:'cutting tool'},{word:'knee',hint:'body joint'},
+    {word:'know',hint:'understand'},{word:'phone',hint:'calling device'},{word:'elephant',hint:'large mammal'},
+    {word:'phrase',hint:'group of words'},{word:'write',hint:'put on paper'},{word:'wrong',hint:'not correct'},
+    {word:'wrap',hint:'cover up'},{word:'wrist',hint:'body joint'},{word:'wreck',hint:'destroy'},
+    {word:'the',hint:'definite article'},{word:'this',hint:'pointing word'},{word:'that',hint:'pointing word'},
+    {word:'there',hint:'in that place'},{word:'their',hint:'belongs to them'},{word:'then',hint:'after that'},
+    {word:'think',hint:'use your mind'},{word:'thing',hint:'object'},{word:'father',hint:'male parent'},
+    {word:'mother',hint:'female parent'},{word:'brother',hint:'male sibling'},{word:'weather',hint:'climate'}
+  ]},
+  'grade-5-6': { name: 'Grade 5-6', words: [
+    {word:'accommodate',hint:'provide lodging'},{word:'achievement',hint:'something accomplished'},{word:'anonymous',hint:'unknown name'},
+    {word:'apology',hint:'expression of regret'},{word:'appreciate',hint:'be thankful for'},{word:'archaeology',hint:'study of ancient things'},
+    {word:'boulevard',hint:'wide street'},{word:'broccoli',hint:'green vegetable'},{word:'campaign',hint:'organized effort'},
+    {word:'challenge',hint:'difficult task'},{word:'champion',hint:'winner'},{word:'character',hint:'person in a story'},
+    {word:'committee',hint:'group of people'},{word:'communicate',hint:'share information'},{word:'concentration',hint:'focused attention'},
+    {word:'conference',hint:'formal meeting'},{word:'confident',hint:'sure of yourself'},{word:'conscience',hint:'sense of right and wrong'},
+    {word:'conscious',hint:'awake and aware'},{word:'controversy',hint:'public disagreement'},{word:'convenient',hint:'easy to use'},
+    {word:'correspond',hint:'match or communicate'},{word:'courageous',hint:'brave'},{word:'curiosity',hint:'desire to learn'},
+    {word:'definitely',hint:'without doubt'},{word:'desperate',hint:'need for help'},{word:'determined',hint:'firmly decided'},
+    {word:'development',hint:'growth'},{word:'disappear',hint:'vanish'},{word:'discipline',hint:'self-control'},
+    {word:'embarrass',hint:'make uncomfortable'},{word:'encourage',hint:'give support'},{word:'environment',hint:'surroundings'},
+    {word:'especially',hint:'particularly'},{word:'exaggerate',hint:'overstate'},{word:'excellent',hint:'very good'},
+    {word:'experience',hint:'practical knowledge'},{word:'explanation',hint:'makes clear'},{word:'extraordinary',hint:'remarkable'},
+    {word:'familiar',hint:'well known'},{word:'fascinating',hint:'very interesting'},{word:'forgiveness',hint:'pardon'},
+    {word:'fortunate',hint:'lucky'},{word:'freedom',hint:'being free'},{word:'furniture',hint:'home items'},
+    {word:'generous',hint:'giving'},{word:'government',hint:'governing body'},{word:'happiness',hint:'being happy'},
+    {word:'imagination',hint:'creativity'},{word:'independent',hint:'self-reliant'},{word:'intelligent',hint:'smart'},
+    {word:'knowledge',hint:'what you know'},{word:'laughter',hint:'sound of laughing'},{word:'magnificent',hint:'very impressive'},
+    {word:'management',hint:'running of things'},{word:'necessity',hint:'something needed'},{word:'occasionally',hint:'sometimes'},
+    {word:'opportunity',hint:'chance'},{word:'perseverance',hint:'persistence'},{word:'phenomenon',hint:'remarkable event'},
+    {word:'possibility',hint:'something possible'},{word:'president',hint:'leader'},{word:'privilege',hint:'special right'},
+    {word:'recommend',hint:'suggest'},{word:'responsibility',hint:'duty'},{word:'rhythm',hint:'beat pattern'},
+    {word:'satisfaction',hint:'fulfillment'},{word:'signature',hint:'your name written'},{word:'temperature',hint:'how hot/cold'},
+    {word:'university',hint:'higher education'},{word:'valuable',hint:'worth a lot'}
+  ]}
+};
+
+let currentUser = null;
+let dbReady = false;
+let cachedUsers = {};
+
+// Listen for Firebase to be ready
+window.addEventListener('firebaseReady', () => {
+  dbReady = true;
+  document.getElementById('syncStatus').textContent = "☁️ Connected to Cloud";
+  
+  // Check if user is already logged in from a previous session
+  const session = localStorage.getItem('rose_session');
+  if (session) {
+    loginUser(session, cachedUsers[session]?.password, true);
+  }
+});
+
+// ============================================================
+// CLOUD DATABASE FUNCTIONS
+// ============================================================
+async function cloudGetUsers() {
+  if (!dbReady) return {};
+  try {
+    const { collection, getDocs, doc, setDoc } = window.fireDB;
+    const snapshot = await getDocs(collection(window.fireDB.db, "users"));
+    
+    // If database is empty, create the default admin
+    if (snapshot.empty) {
+      const defaultAdmin = { password:'admin123', role:'teacher', stats:{correct:0,wrong:0,streak:0,missed:[]} };
+      await setDoc(doc(window.fireDB.db, "users", "admin"), defaultAdmin);
+      return { admin: defaultAdmin };
+    }
+
+    const users = {};
+    snapshot.forEach(docSnap => {
+      users[docSnap.id] = docSnap.data();
+    });
+    return users;
+  } catch (e) {
+    console.error("Cloud error:", e);
+    return {};
+  }
+}
+
+async function cloudSaveUser(username, data) {
+  if (!dbReady) return;
+  try {
+    const { doc, setDoc } = window.fireDB;
+    await setDoc(doc(window.fireDB.db, "users", username), data, { merge: true });
+  } catch (e) {
+    console.error("Cloud error:", e);
+  }
+}
+
+async function cloudDeleteUser(username) {
+  if (!dbReady) return;
+  try {
+    const { doc, deleteDoc } = window.fireDB;
+    await deleteDoc(doc(window.fireDB.db, "users", username));
+  } catch (e) {
+    console.error("Cloud error:", e);
+  }
+}
+
+// ============================================================
+// APP STATE
+// ============================================================
+let currentCategory = 'all';
+let currentWord = null;
+let voiceGender = 'female', voiceAccent = 'en-US', speechRate = 0.7;
+
+function getUserStats(u){ return cachedUsers[u]?.stats || {correct:0,wrong:0,streak:0,missed:[]}; }
+function isTeacher(){ return currentUser && cachedUsers[currentUser]?.role === 'teacher'; }
+
+async function loginUser(u, p, isSessionRestore = false){
+  if(!dbReady) {
+    document.getElementById('loginError').textContent = '⚠️ Connecting to Cloud... Please wait 2 seconds and try again.';
+    return;
+  }
+  
+  document.getElementById('loginError').textContent = 'Checking Cloud...';
+  cachedUsers = await cloudGetUsers();
+  
+  if (cachedUsers[u] && (isSessionRestore || cachedUsers[u].password === p)){ 
+    currentUser = u; 
+    localStorage.setItem('rose_session', u);
+    
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('appScreen').classList.remove('hidden');
+    document.getElementById('userName').textContent = u;
+    document.getElementById('userAvatar').textContent = u.charAt(0).toUpperCase();
+    document.getElementById('loginError').textContent = '';
+    
+    initApp();
+    return true; 
+  } else {
+    document.getElementById('loginError').textContent = '❌ Invalid username or password';
+    return false;
+  }
+}
+
+// ============================================================
+// SPELLING
+// ============================================================
+function getWordsForCategory(cat){
+  if (cat === 'all'){
+    let result = [];
+    Object.keys(WORD_CATEGORIES).forEach(k => { WORD_CATEGORIES[k].words.forEach(w => result.push({...w, category:k})); });
+    return result;
+  }
+  if (WORD_CATEGORIES[cat]) return WORD_CATEGORIES[cat].words.map(w => ({...w, category:cat}));
+  return [];
+}
+
+function getNextWord(){
+  let available = getWordsForCategory(currentCategory);
+  const missed = getUserStats(currentUser).missed || [];
+  if (missed.length > 0){
+    const missedWords = available.filter(w => missed.includes(w.word));
+    if (missedWords.length > 0) return missedWords[Math.floor(Math.random()*missedWords.length)];
+  }
+  if (available.length === 0) return null;
+  return available[Math.floor(Math.random()*available.length)];
+}
+
+async function checkSpelling(input, word){
+  const isCorrect = input.trim().toLowerCase() === word.toLowerCase().trim();
+  const stats = getUserStats(currentUser);
+  
+  if (isCorrect){ 
+    stats.correct++; 
+    stats.streak++; 
+    stats.missed = stats.missed.filter(w => w !== word); 
+  } else { 
+    stats.wrong++; 
+    stats.streak = 0; 
+    if (!stats.missed.includes(word)) stats.missed.push(word); 
+  }
+  
+  await updateUserStats(currentUser, stats);
+  return isCorrect;
+}
+
+function speakWord(word){
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.rate = speechRate;
+  u.pitch = voiceGender === 'female' ? 1.1 : 0.9;
+  u.lang = voiceAccent;
+  const voices = window.speechSynthesis.getVoices();
+  let f = voices.filter(v => v.lang.startsWith(voiceAccent));
+  if (voiceGender === 'female') f = f.filter(v => /female|samantha|victoria|zira/i.test(v.name));
+  else f = f.filter(v => /male|david|alex|daniel/i.test(v.name));
+  if (f.length > 0) u.voice = f[0];
+  window.speechSynthesis.speak(u);
+}
+
+async function updateAllStats(){
+  const stats = getUserStats(currentUser);
+  const total = (stats.correct||0) + (stats.wrong||0);
+  const accuracy = total > 0 ? Math.round((stats.correct/total)*100) : 0;
+  const el = id => document.getElementById(id);
+  if (el('statCorrect')) el('statCorrect').textContent = stats.correct||0;
+  if (el('statWrong')) el('statWrong').textContent = stats.wrong||0;
+  if (el('statStreak')) el('statStreak').textContent = stats.streak||0;
+  if (el('statAccuracy')) el('statAccuracy').textContent = accuracy+'%';
+  if (el('statTotal')) el('statTotal').textContent = total;
+  if (el('statMissed')) el('statMissed').textContent = (stats.missed||[]).length;
+  if (el('statsCorrect')) el('statsCorrect').textContent = stats.correct||0;
+  if (el('statsWrong')) el('statsWrong').textContent = stats.wrong||0;
+  if (el('statsAccuracy')) el('statsAccuracy').textContent = accuracy+'%';
+  if (el('statsStreak')) el('statsStreak').textContent = stats.streak||0;
+  if (el('statsTotal')) el('statsTotal').textContent = total;
+  if (el('statsLearned')) el('statsLearned').textContent = stats.correct||0;
+  updateMissedWords(stats.missed||[]);
+  if (el('missedCount')) el('missedCount').textContent = (stats.missed||[]).length + ' words';
+  if (el('statsMissedCount')) el('statsMissedCount').textContent = (stats.missed||[]).length + ' words';
+  
+  const allWords = WORD_CATEGORIES;
+  Object.keys(allWords).forEach(k => { const c = el('count-'+k); if(c) c.textContent = allWords[k].words.length; });
+  let totalWords = 0; Object.keys(allWords).forEach(k => totalWords += allWords[k].words.length);
+  if (el('catWordCount')) el('catWordCount').textContent = totalWords + ' words total';
+  
+  await refreshLeaderboardUI();
+}
+
+function updateMissedWords(missed){
+  ['missedTags','statsMissedTags'].forEach(id => {
+    const c = document.getElementById(id);
+    if (!c) return;
+    c.innerHTML = '';
+    if (missed.length === 0) c.innerHTML = '<span style="color:var(--text-light);">🌟 No missed words! Great job!</span>';
+    else missed.forEach(w => {
+      const tag = document.createElement('span');
+      tag.className = 'missed-tag';
+      tag.innerHTML = `${w} <span style="cursor:pointer;opacity:0.6;" onclick="removeMissedWord('${w}')">✕</span>`;
+      c.appendChild(tag);
+    });
+  });
+}
+
+async function removeMissedWord(w){
+  const stats = getUserStats(currentUser);
+  stats.missed = stats.missed.filter(x => x !== w);
+  await updateUserStats(currentUser, stats);
+  await updateAllStats();
+}
+
+async function refreshLeaderboardUI(){
+  const users = await cloudGetUsers();
+  const lb = {};
+  Object.keys(users).forEach(u => {
+    const stats = users[u].stats || {correct:0,wrong:0,streak:0};
+    const total = stats.correct + stats.wrong;
+    lb[u] = {
+      correct: stats.correct,
+      wrong: stats.wrong,
+      streak: stats.streak,
+      accuracy: total > 0 ? Math.round((stats.correct/total)*100) : 0,
+      score: (stats.correct * 10) + (stats.streak * 2)
+    };
+  });
+
+  const arr = Object.entries(lb).sort((a,b) => b[1].score - a[1].score);
+  const tb = document.getElementById('leaderboardBody');
+  if (!tb) return;
+  if (arr.length === 0){ tb.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--text-light);">No data yet</td></tr>'; return; }
+  
+  tb.innerHTML = arr.slice(0,20).map(([u,d],i) => {
+    const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'#'+(i+1);
+    return `<tr><td style="padding:10px 14px;border-bottom:1px solid var(--light-gray);font-weight:800;">${medal}</td><td style="padding:10px 14px;border-bottom:1px solid var(--light-gray);"><strong>${u}</strong></td><td style="padding:10px 14px;border-bottom:1px solid var(--light-gray);">${d.correct}</td><td style="padding:10px 14px;border-bottom:1px solid var(--light-gray);">${d.accuracy}%</td><td style="padding:10px 14px;border-bottom:1px solid var(--light-gray);">${d.streak}</td><td style="padding:10px 14px;border-bottom:1px solid var(--light-gray);font-weight:800;">${d.score}</td></tr>`;
+  }).join('');
+}
+
+async function updateUserList(){
+  const c = document.getElementById('userList');
+  if (!c) return;
+  cachedUsers = await cloudGetUsers();
+  c.innerHTML = Object.keys(cachedUsers).map(u => {
+    const emoji = cachedUsers[u].role==='teacher'?'👨‍🏫':'👶';
+    const del = u !== 'admin' ? `<button class="delete-user" onclick="deleteUser('${u}')" title="Delete">✕</button>` : '';
+    return `<span class="user-tag">${emoji} ${u} ${del}</span>`;
+  }).join('');
+  const sel = document.getElementById('resetUserSelect');
+  if (sel){
+    sel.innerHTML = '<option value="">-- Select User --</option>' + Object.keys(cachedUsers).filter(u => u !== 'admin').map(u => `<option value="${u}">${u}</option>`).join('');
+  }
+}
+
+async function deleteUser(username){
+  if (!isTeacher()) { alert('❌ Access denied'); return; }
+  if (!confirm(`Delete user "${username}"?`)) return;
+  await cloudDeleteUser(username);
+  await updateUserList();
+  alert(`✅ User "${username}" deleted from Cloud`);
+}
+
+function updateCategoryWordList(cat){
+  const c = document.getElementById('categoryWordList');
+  if (!c) return;
+  const words = getWordsForCategory(cat);
+  const name = cat === 'all' ? 'All Words' : (WORD_CATEGORIES[cat]?.name || cat);
+  document.getElementById('selectedCatName').textContent = name;
+  if (words.length === 0){ c.innerHTML = '<span style="color:var(--text-light);">No words</span>'; return; }
+  c.innerHTML = words.map(w =>
+    `<div style="display:flex;justify-content:space-between;padding:8px 12px;background:var(--bg);border-radius:var(--radius-sm);margin-bottom:4px;">
+      <span style="font-weight:600;">${w.word}</span>
+      <span style="color:var(--text-light);font-size:0.85rem;">${w.hint||''}</span>
+    </div>`
+  ).join('');
+}
+
+function selectCategory(cat){
+  currentCategory = cat;
+  document.querySelectorAll('.category-btn').forEach(b => b.classList.toggle('active', b.dataset.category === cat));
+  loadNewWord();
+  updateCategoryWordList(cat);
+}
+
+function loadNewWord(){
+  const w = getNextWord();
+  if (!w){ document.getElementById('wordText').textContent = '📚 No words!'; return; }
+  currentWord = w.word;
+  const name = w.category === 'all' ? 'All Words' : (WORD_CATEGORIES[w.category]?.name || w.category);
+  document.getElementById('wordText').textContent = '🔊 Listen first';
+  document.getElementById('wordHint').textContent = `💡 Hint: ${w.hint || 'No hint'}`;
+  document.getElementById('wordCategory').textContent = `📚 ${name}`;
+  document.getElementById('wordDisplay').className = 'word-display';
+  document.getElementById('userInput').value = '';
+  document.getElementById('userInput').focus();
+  document.getElementById('feedback').textContent = `💡 Type the word: ${w.hint||'No hint'}`;
+  document.getElementById('feedback').style.color = 'var(--text-light)';
+  document.getElementById('feedback').style.background = 'transparent';
+}
+
+async function handleCheck(){
+  const input = document.getElementById('userInput').value;
+  if (!currentWord){ document.getElementById('feedback').textContent = '⚠️ Tap "Next" first!'; return; }
+  if (!input.trim()){ document.getElementById('feedback').textContent = '✏️ Type something!'; return; }
+  const isCorrect = await checkSpelling(input, currentWord);
+  const d = document.getElementById('wordDisplay');
+  document.getElementById('wordText').textContent = currentWord;
+  if (isCorrect){
+    d.className = 'word-display correct';
+    document.getElementById('feedback').textContent = `✅ Perfect! "${currentWord}" is right! 🌟`;
+    document.getElementById('feedback').style.color = 'var(--success)';
+    speakWord('Correct! Well done!');
+  } else {
+    d.className = 'word-display wrong';
+    document.getElementById('feedback').textContent = `❌ Oops! Correct is "${currentWord}".`;
+    document.getElementById('feedback').style.color = 'var(--danger)';
+    speakWord(currentWord);
+  }
+  await updateAllStats();
+  setTimeout(() => d.className = 'word-display', 1500);
+}
+
+// ============================================================
+// GAMES
+// ============================================================
+let currentGame = null, gameScore = 0, gameRound = 0, gameWords = [];
+
+function startGame(type){
+  currentGame = type; gameScore = 0; gameRound = 0;
+  const words = getWordsForCategory(currentCategory);
+  if (words.length < 3){ alert('Need at least 3 words. Pick another category.'); return; }
+  gameWords = words.sort(() => Math.random() - 0.5).slice(0, 10);
+  document.getElementById('gameArea').style.display = 'block';
+  document.getElementById('gameSelector').style.display = 'none';
+  document.getElementById('gameTitle').textContent = '🎮 ' + {
+    match:'Word Match', gap:'Gap Fill', bee:'Spelling Bee', crossword:'Crossword',
+    wordsearch:'Word Search', balloon:'Balloon Pop', hangman:'Hangman',
+    webconnect:'Web Connect', missing:'Missing Letters'
+  }[type];
+  document.getElementById('gameScore').textContent = 'Score: 0';
+  document.getElementById('gameFeedback').textContent = '💡 Good luck!';
+  document.getElementById('gameFeedback').style.color = 'var(--text-light)';
+  nextGameRound();
+}
+
+function nextGameRound(){
+  if (gameRound >= gameWords.length){ endGame(); return; }
+  const w = gameWords[gameRound];
+  gameRound++;
+  document.getElementById('gameRound').textContent = `Round: ${gameRound}/${gameWords.length}`;
+  ({match:renderMatch, gap:renderGap, bee:renderBee, crossword:renderCrossword,
+    wordsearch:renderWordSearch, balloon:renderBalloon, hangman:renderHangman,
+    webconnect:renderWebConnect, missing:renderMissing})[currentGame](w);
+}
+
+function endGame(){
+  document.getElementById('gameArea').style.display = 'none';
+  document.getElementById('gameSelector').style.display = 'grid';
+  document.getElementById('gameFeedback').textContent = `🎉 Game Over! Score: ${gameScore}`;
+  document.getElementById('gameFeedback').style.color = 'var(--success)';
+  currentGame = null;
+}
+
+function renderMatch(w){
+  const all = getWordsForCategory(currentCategory);
+  const opts = [w];
+  const shuf = all.sort(() => Math.random() - 0.5);
+  for (const x of shuf){ if (!opts.find(o => o.word === x.word) && opts.length < 4) opts.push(x); if (opts.length >= 4) break; }
+  const shuffled = opts.sort(() => Math.random() - 0.5);
+  document.getElementById('gameContent').innerHTML = `
+    <div class="game-question">🔍 Match the word to its meaning:</div>
+    <div style="text-align:center;font-size:1.5rem;font-weight:700;padding:16px;background:var(--bg);border-radius:var(--radius-sm);margin-bottom:16px;">"${w.word}"</div>
+    <div class="game-options">${shuffled.map(o => `<button class="option-btn" onclick="checkMatch('${o.word}','${w.word}',this)">${o.hint||o.word}</button>`).join('')}</div>`;
+}
+
+function checkMatch(sel, cor, btn){
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.add('disabled'));
+  if (sel === cor){ btn.classList.add('correct'); gameScore += 10; document.getElementById('gameScore').textContent = 'Score: '+gameScore;
+    document.getElementById('gameFeedback').textContent = '✅ Correct! +10'; document.getElementById('gameFeedback').style.color = 'var(--success)'; }
+  else { btn.classList.add('wrong'); document.getElementById('gameFeedback').textContent = '❌ Wrong! Answer: '+cor; document.getElementById('gameFeedback').style.color = 'var(--danger)'; }
+  setTimeout(nextGameRound, 1500);
+}
+
+function renderGap(w){
+  const sentences = [`The ___ is here.`, `I see a ___ today.`, `Where is my ___?`, `This ___ is nice.`, `Look at the ___!`];
+  const s = sentences[Math.floor(Math.random()*sentences.length)];
+  const all = getWordsForCategory(currentCategory);
+  const opts = [w.word];
+  const shuf = all.sort(() => Math.random() - 0.5);
+  for (const x of shuf){ if (!opts.includes(x.word) && opts.length < 4) opts.push(x.word); if (opts.length >= 4) break; }
+  const shuffled = opts.sort(() => Math.random() - 0.5);
+  document.getElementById('gameContent').innerHTML = `
+    <div class="game-question">📝 Fill in the blank:</div>
+    <div style="font-size:1.2rem;padding:20px;background:var(--bg);border-radius:var(--radius-sm);margin-bottom:16px;text-align:center;">${s.replace('___', '_____')}</div>
+    <div style="text-align:center;color:var(--text-light);margin-bottom:8px;">💡 ${w.hint||''}</div>
+    <div class="game-options">${shuffled.map(o => `<button class="option-btn" onclick="checkGap('${o}','${w.word}',this)">${o}</button>`).join('')}</div>`;
+}
+
+function checkGap(sel, cor, btn){
+  document.querySelectorAll('.option-btn').forEach(b => b.classList.add('disabled'));
+  if (sel === cor){ btn.classList.add('correct'); gameScore += 10; document.getElementById('gameScore').textContent = 'Score: '+gameScore;
+    document.getElementById('gameFeedback').textContent = '✅ Correct! +10'; document.getElementById('gameFeedback').style.color = 'var(--success)'; }
+  else { btn.classList.add('wrong'); document.getElementById('gameFeedback').textContent = '❌ Answer: '+cor; document.getElementById('gameFeedback').style.color = 'var(--danger)'; }
+  setTimeout(nextGameRound, 1500);
+}
+
+function renderBee(w){
+  speakWord(w.word);
+  document.getElementById('gameContent').innerHTML = `
+    <div class="game-question">🐝 Listen and type the word:</div>
+    <div style="text-align:center;padding:8px;margin-bottom:12px;"><button class="btn btn-primary" onclick="speakWord('${w.word}')"><i class="fas fa-volume-up"></i> Repeat</button></div>
+    <div class="input-group"><input type="text" id="beeInput" placeholder="Type word..." /><button class="btn btn-success" onclick="checkBee('${w.word}')"><i class="fas fa-check"></i></button></div>
+    <div style="text-align:center;color:var(--text-light);margin-top:8px;">💡 ${w.hint||''}</div>`;
+  setTimeout(() => { const i = document.getElementById('beeInput'); if(i){ i.focus(); i.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); checkBee(w.word); } }); } }, 100);
+}
+
+function checkBee(cor){
+  const i = document.getElementById('beeInput'); if(!i) return;
+  const ans = i.value.trim().toLowerCase();
+  if (ans === cor.toLowerCase()){ gameScore += 10; document.getElementById('gameScore').textContent = 'Score: '+gameScore;
+    document.getElementById('gameFeedback').textContent = '✅ Correct! +10'; document.getElementById('gameFeedback').style.color = 'var(--success)'; }
+  else { document.getElementById('gameFeedback').textContent = '❌ Answer: '+cor; document.getElementById('gameFeedback').style.color = 'var(--danger)'; }
+  i.disabled = true;
+  setTimeout(nextGameRound, 1500);
+}
+
+function renderCrossword(w){
+  const letters = w.word.split('');
+  const size = Math.max(5, letters.length + 2);
+  const startRow = Math.floor(size/2), startCol = Math.floor((size-letters.length)/2);
+  let html = `<div class="game-question">🔍 Complete the crossword:</div>
+    <div style="text-align:center;color:var(--text-light);margin-bottom:12px;">💡 ${w.hint||''}</div>
+    <div class="crossword-grid" style="grid-template-columns:repeat(${size},1fr);">`;
+  for (let r=0;r<size;r++) for (let c=0;c<size;c++){
+    const isWord = r===startRow && c>=startCol && c<startCol+letters.length;
+    if (isWord) html += `<div class="cell" style="background:var(--success);color:white;display:flex;align-items:center;justify-content:center;">${letters[c-startCol].toUpperCase()}</div>`;
+    else html += `<div class="cell blocked"></div>`;
+  }
+  html += `</div><div style="text-align:center;margin-top:12px;"><button class="btn btn-success" onclick="checkCrossword('${w.word}')"><i class="fas fa-check"></i> Complete</button></div>`;
+  document.getElementById('gameContent').innerHTML = html;
+}
+
+function checkCrossword(cor){
+  gameScore += 15; document.getElementById('gameScore').textContent = 'Score: '+gameScore;
+  document.getElementById('gameFeedback').textContent = `✅ Word: "${cor}" +15`; document.getElementById('gameFeedback').style.color = 'var(--success)';
+  setTimeout(nextGameRound, 1500);
+}
+
+function renderWordSearch(w){
+  const size = 8;
+  const letters = w.word.toLowerCase().split('');
+  const alpha = 'abcdefghijklmnopqrstuvwxyz';
+  const grid = [];
+  for (let r=0;r<size;r++){ grid[r]=[]; for(let c=0;c<size;c++) grid[r][c] = alpha[Math.floor(Math.random()*26)]; }
+  const dir = Math.floor(Math.random()*2);
+  const sr = Math.floor(Math.random()*(size-(dir===0?1:letters.length)));
+  const sc = Math.floor(Math.random()*(size-(dir===0?letters.length:1)));
+  for (let i=0;i<letters.length;i++){ if(dir===0) grid[sr][sc+i]=letters[i]; else grid[sr+i][sc]=letters[i]; }
+  let html = `<div class="game-question">🔎 Find: <span style="color:var(--primary);">${w.hint||'No hint'}</span></div>
+    <div class="word-search-grid" style="grid-template-columns:repeat(${size},1fr);max-width:400px;margin:0 auto;">`;
+  for (let r=0;r<size;r++) for (let c=0;c<size;c++)
+    html += `<div class="cell" data-letter="${grid[r][c]}" onclick="checkWSCell('${grid[r][c]}','${w.word}',this)">${grid[r][c]}</div>`;
+  html += `</div>`;
+  document.getElementById('gameContent').innerHTML = html;
+  window._wsFound = 0;
+}
+
+function checkWSCell(letter, word, cell){
+  if (cell.classList.contains('found')) return;
+  if (word.toLowerCase().includes(letter)){
+    cell.classList.add('found'); window._wsFound++;
+    if (window._wsFound >= word.split('').filter((l,i,a) => a.indexOf(l)===i).length){
+      gameScore += 15; document.getElementById('gameScore').textContent = 'Score: '+gameScore;
+      document.getElementById('gameFeedback').textContent = `✅ Found! +15`; document.getElementById('gameFeedback').style.color = 'var(--success)';
+      setTimeout(nextGameRound, 1500);
+    }
+  }
+}
+
+function renderBalloon(w){
+  const all = getWordsForCategory(currentCategory);
+  const opts = [w];
+  const shuf = all.sort(() => Math.random() - 0.5);
+  for (const x of shuf){ if (!opts.find(o => o.word === x.word) && opts.length < 6) opts.push(x); if (opts.length >= 6) break; }
+  const shuffled = opts.sort(() => Math.random() - 0.5);
+  document.getElementById('gameContent').innerHTML = `
+    <div class="game-question">🎈 Pop the balloon: <strong>"${w.word}"</strong></div>
+    <div style="text-align:center;color:var(--text-light);margin-bottom:8px;">💡 ${w.hint||''}</div>
+    <div class="balloon-container">${shuffled.map((o,i) => `<div class="balloon" onclick="checkBalloon('${o.word}','${w.word}',this)">🎈<div style="font-size:0.75rem;font-weight:600;margin-top:-8px;">${o.word}</div></div>`).join('')}</div>`;
+}
+
+function checkBalloon(sel, cor, el){
+  if (el.classList.contains('popped')) return;
+  if (sel === cor){
+    el.classList.add('popped'); gameScore += 10; document.getElementById('gameScore').textContent = 'Score: '+gameScore;
+    document.getElementById('gameFeedback').textContent = '🎉 POP! +10'; document.getElementById('gameFeedback').style.color = 'var(--success)';
+    setTimeout(nextGameRound, 1000);
+  } else {
+    el.classList.add('popped');
+    document.getElementById('gameFeedback').textContent = '❌ Answer: '+cor; document.getElementById('gameFeedback').style.color = 'var(--danger)';
+    setTimeout(nextGameRound, 1500);
+  }
+}
+
+const HANGMAN_STAGES = ['   \n   \n   \n   \n   ','   \n   \n   \n   \n===','   \n   \n   \n | \n===','   \n   \n   \n/|\\\n===','   \n   \n   \n/|\\\n/ \\','   \n   \n  |\n/|\\\n/ \\','   \n  _\n  |\n/|\\\n/ \\','  __\n  |\n  |\n/|\\\n/ \\'];
+
+function renderHangman(w){
+  window._hmWrong = 0;
+  window._hmWord = w.word.toLowerCase();
+  document.getElementById('gameContent').innerHTML = `
+    <div class="game-question">💀 Guess the word (${w.word.length} letters)</div>
+    <div class="hangman-display" id="hangmanDisplay">${HANGMAN_STAGES[0]}</div>
+    <div id="hangmanWord" style="text-align:center;font-size:2rem;letter-spacing:8px;padding:12px;background:var(--bg);border-radius:var(--radius-sm);margin-bottom:12px;">${w.word.split('').map(() => '_').join(' ')}</div>
+    <div style="text-align:center;color:var(--text-light);margin-bottom:8px;">💡 ${w.hint||''}</div>
+    <div id="hangmanLetters" style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:400px;margin:0 auto;">
+      ${'abcdefghijklmnopqrstuvwxyz'.split('').map(l => `<button class="btn btn-sm btn-outline" onclick="guessLetter('${l}',this)" style="min-width:36px;padding:6px 10px;">${l}</button>`).join('')}
+    </div>`;
+}
+
+function guessLetter(letter, btn){
+  btn.disabled = true; btn.style.opacity = '0.5';
+  const word = window._hmWord;
+  const disp = document.getElementById('hangmanWord');
+  if (word.includes(letter)){
+    const cur = disp.textContent.split(' ');
+    word.split('').forEach((l,i) => { if (l === letter) cur[i] = letter; });
+    disp.textContent = cur.join(' ');
+    if (!cur.includes('_')){
+      gameScore += 15; document.getElementById('gameScore').textContent = 'Score: '+gameScore;
+      document.getElementById('gameFeedback').textContent = `🎉 Guessed "${word}"! +15`; document.getElementById('gameFeedback').style.color = 'var(--success)';
+      document.querySelectorAll('#hangmanLetters .btn').forEach(b => b.disabled = true);
+      setTimeout(nextGameRound, 1500);
+    }
+  } else {
+    window._hmWrong++;
+    if (window._hmWrong < HANGMAN_STAGES.length) document.getElementById('hangmanDisplay').textContent = HANGMAN_STAGES[window._hmWrong];
+    document.getElementById('gameFeedback').textContent = `❌ "${letter}" not in word`;
+    document.getElementById('gameFeedback').style.color = 'var(--danger)';
+    if (window._hmWrong >= HANGMAN_STAGES.length - 1){
+      document.getElementById('gameFeedback').textContent = `💀 Game over! Word: "${word}"`;
+      disp.textContent = word.split('').join(' ');
+      document.querySelectorAll('#hangmanLetters .btn').forEach(b => b.disabled = true);
+      setTimeout(nextGameRound, 2000);
+    }
+  }
+}
+
+function renderWebConnect(w){
+  const letters = w.word.toLowerCase().split('');
+  const extra = 16 - letters.length;
+  const allLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  const used = [...letters];
+  for (let i=0;i<extra;i++){ let l; do { l = allLetters[Math.floor(Math.random()*26)]; } while (used.includes(l)); used.push(l); }
+  const shuffled = used.sort(() => Math.random() - 0.5);
+  window._wcSelected = [];
+  window._wcWord = w.word.toLowerCase();
+  let idx = 0;
+  let html = `<div class="game-question">🌐 Connect to spell: <strong>"${w.word}"</strong></div>
+    <div style="text-align:center;color:var(--text-light);margin-bottom:8px;">💡 ${w.hint||''}</div>
+    <div class="web-connect-grid">`;
+  for (let r=0;r<4;r++) for (let c=0;c<4;c++){
+    const letter = shuffled[idx++];
+    html += `<div class="node" onclick="checkWC('${letter}',this)">${letter}</div>`;
+  }
+  html += `</div><div style="text-align:center;margin-top:12px;"><button class="btn btn-outline" onclick="resetWC()"><i class="fas fa-redo"></i> Reset</button></div>`;
+  document.getElementById('gameContent').innerHTML = html;
+}
+
+function checkWC(letter, node){
+  if (node.classList.contains('connected') || node.classList.contains('wrong')) return;
+  node.classList.add('selected');
+  window._wcSelected.push(letter);
+  const word = window._wcWord;
+  const current = window._wcSelected.join('');
+  const isMatch = word.split('').every((l,i) => i >= current.length || l === current[i]);
+  if (!isMatch){
+    document.querySelectorAll('.web-connect-grid .node.selected').forEach(n => { n.classList.remove('selected'); n.classList.add('wrong'); });
+    window._wcSelected = [];
+    document.getElementById('gameFeedback').textContent = '❌ Wrong path!'; document.getElementById('gameFeedback').style.color = 'var(--danger)';
+    setTimeout(() => document.querySelectorAll('.web-connect-grid .node.wrong').forEach(n => n.classList.remove('wrong')), 800);
+    return;
+  }
+  if (current.length === word.length){
+    document.querySelectorAll('.web-connect-grid .node.selected').forEach(n => { n.classList.remove('selected'); n.classList.add('connected'); });
+    gameScore += 15; document.getElementById('gameScore').textContent = 'Score: '+gameScore;
+    document.getElementById('gameFeedback').textContent = `✅ Connected! +15`; document.getElementById('gameFeedback').style.color = 'var(--success)';
+    window._wcSelected = [];
+    setTimeout(nextGameRound, 1500);
+  } else {
+    document.getElementById('gameFeedback').textContent = `🔗 ${current}`; document.getElementById('gameFeedback').style.color = 'var(--primary)';
+  }
+}
+
+function resetWC(){
+  document.querySelectorAll('.web-connect-grid .node').forEach(n => n.classList.remove('selected','connected','wrong'));
+  window._wcSelected = [];
+}
+
+function renderMissing(w){
+  const letters = w.word.split('');
+  const idx = Math.floor(Math.random()*letters.length);
+  const missing = letters[idx];
+  const allLetters = 'abcdefghijklmnopqrstuvwxyz'.split('');
+  const opts = [missing];
+  for (let i=0;i<3;i++){ let l; do { l = allLetters[Math.floor(Math.random()*26)]; } while (opts.includes(l)); opts.push(l); }
+  const shuffled = opts.sort(() => Math.random() - 0.5);
+  let disp = '';
+  letters.forEach((l,i) => { disp += i === idx ? `<span class="blank" id="missingBlank">__</span>` : `<span class="filled">${l}</span>`; });
+  document.getElementById('gameContent').innerHTML = `
+    <div class="game-question">🔤 Fill in the missing letter:</div>
+    <div class="missing-word">${disp}</div>
+    <div style="text-align:center;color:var(--text-light);margin-bottom:8px;">💡 ${w.hint||''}</div>
+    <div class="letter-options">${shuffled.map(l => `<button class="letter-btn" onclick="checkMissing('${l}','${missing}','${w.word}',this)">${l}</button>`).join('')}</div>`;
+}
+
+function checkMissing(sel, cor, word, btn){
+  document.querySelectorAll('.letter-btn').forEach(b => b.classList.add('used'));
+  if (sel === cor){
+    btn.classList.add('correct');
+    const b = document.getElementById('missingBlank'); if(b){ b.textContent = cor; b.className = 'filled'; }
+    gameScore += 10; document.getElementById('gameScore').textContent = 'Score: '+gameScore;
+    document.getElementById('gameFeedback').textContent = `✅ Correct! +10`; document.getElementById('gameFeedback').style.color = 'var(--success)';
+  } else {
+    btn.classList.add('wrong');
+    const b = document.getElementById('missingBlank'); if(b){ b.textContent = cor; b.className = 'filled'; b.style.color = 'var(--danger)'; }
+    document.getElementById('gameFeedback').textContent = `❌ Answer: "${cor}"`; document.getElementById('gameFeedback').style.color = 'var(--danger)';
+  }
+  setTimeout(nextGameRound, 1500);
+}
+
+// ============================================================
+// SETTINGS
+// ============================================================
+function applySettings(){
+  const vg = document.getElementById('voiceGender');
+  const va = document.getElementById('voiceAccent');
+  const sr = document.getElementById('speechRate');
+  const fs = document.getElementById('fontSize');
+  if (vg) voiceGender = vg.value;
+  if (va) voiceAccent = va.value;
+  if (sr) speechRate = parseFloat(sr.value);
+  if (fs) document.body.style.fontSize = fs.value;
+  const theme = localStorage.getItem('rose_color') || 'purple';
+  document.querySelectorAll('.color-btn').forEach(b => {
+    b.style.border = b.dataset.color === theme ? '3px solid var(--text)' : '3px solid transparent';
+  });
+}
+
+function toggleDarkMode(){
+  const cur = document.documentElement.getAttribute('data-theme');
+  if (cur === 'dark'){ document.documentElement.removeAttribute('data-theme'); localStorage.setItem('rose_theme','light'); document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-moon"></i>'; }
+  else { document.documentElement.setAttribute('data-theme','dark'); localStorage.setItem('rose_theme','dark'); document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-sun"></i>'; }
+}
+
+// ============================================================
+// INIT & EVENTS
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  // Login Button
+  document.getElementById('loginBtn').addEventListener('click', async () => {
+    const u = document.getElementById('loginUsername').value.trim();
+    const p = document.getElementById('loginPassword').value.trim();
+    if (!u || !p){ document.getElementById('loginError').textContent = '⚠️ Enter username and password'; return; }
+    await loginUser(u, p);
+  });
+  
+  document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginBtn').click(); });
+
+  // Logout Button
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    currentUser = null;
+    localStorage.removeItem('rose_session');
+    document.getElementById('appScreen').classList.add('hidden');
+    document.getElementById('loginScreen').classList.remove('hidden');
+    document.getElementById('loginUsername').value = '';
+    document.getElementById('loginPassword').value = '';
+    document.getElementById('loginError').textContent = '';
+    
+    // Hide Admin UI
+    document.getElementById('adminBadge').classList.add('hidden');
+    const adminBtn = document.getElementById('adminTabBtn');
+    if(adminBtn) adminBtn.classList.add('hidden');
+  });
+
+  // Dark mode
+  document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function(){
+      if (this.dataset.tab === 'admin' && !isTeacher()){
+        alert('❌ Access denied. Admin only.');
+        return;
+      }
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      const map = {spell:'spellTab', games:'gamesTab', categories:'categoriesTab', stats:'statsTab', leaderboard:'leaderboardTab', settings:'settingsTab', admin:'adminTab'};
+      const target = document.getElementById(map[this.dataset.tab]);
+      if (target) target.classList.add('active');
+      if (this.dataset.tab === 'categories') updateCategoryWordList(currentCategory);
+      if (this.dataset.tab === 'admin'){ updateUserList(); updateAllStats(); }
+      if (this.dataset.tab === 'leaderboard') refreshLeaderboardUI();
+      if (this.dataset.tab === 'settings') applySettings();
+    });
+  });
+
+  // Category Selector
+  document.querySelectorAll('.category-btn').forEach(b => b.addEventListener('click', function(){ selectCategory(this.dataset.category); }));
+
+  // Spell
+  document.getElementById('listenBtn').addEventListener('click', () => {
+    if (currentWord){ speakWord(currentWord); document.getElementById('wordText').textContent = '🔊 Listening...'; document.getElementById('wordDisplay').className = 'word-display listening'; setTimeout(() => { document.getElementById('wordText').textContent = '✏️ Type it!'; document.getElementById('wordDisplay').className = 'word-display'; }, 1500); }
+    else loadNewWord();
+  });
+  document.getElementById('nextBtn').addEventListener('click', loadNewWord);
+  document.getElementById('checkBtn').addEventListener('click', handleCheck);
+  document.getElementById('userInput').addEventListener('keydown', e => { if (e.key === 'Enter'){ e.preventDefault(); handleCheck(); } });
+
+  // Reset stats
+  document.getElementById('resetStatsBtn').addEventListener('click', async () => {
+    if (confirm('Reset your stats?')){
+      const state = {correct:0, wrong:0, streak:0, missed:[]};
+      await updateUserStats(currentUser, state);
+      await updateAllStats();
+      loadNewWord();
+    }
+  });
+
+  // Settings
+  document.getElementById('voiceGender').addEventListener('change', applySettings);
+  document.getElementById('voiceAccent').addEventListener('change', applySettings);
+  document.getElementById('speechRate').addEventListener('change', applySettings);
+  document.getElementById('fontSize').addEventListener('change', applySettings);
+  document.querySelectorAll('.color-btn').forEach(b => b.addEventListener('click', function(){
+    const c = this.dataset.color;
+    localStorage.setItem('rose_color', c);
+    document.documentElement.setAttribute('data-theme-color', c);
+    applySettings();
+  }));
+
+  // Change own password
+  document.getElementById('changePasswordBtn').addEventListener('click', async () => {
+    const cur = document.getElementById('currentPassword').value;
+    const nw = document.getElementById('newPassword').value;
+    if (!cur || !nw){ alert('⚠️ Fill both fields'); return; }
+    if (nw.length < 4){ alert('⚠️ Password must be at least 4 characters'); return; }
+    
+    if (cachedUsers[currentUser].password !== cur){ alert('❌ Current password is wrong'); return; }
+    
+    cachedUsers[currentUser].password = nw;
+    await cloudSaveUser(currentUser, cachedUsers[currentUser]);
+    
+    document.getElementById('currentPassword').value = '';
+    document.getElementById('newPassword').value = '';
+    alert('✅ Password changed successfully in the Cloud!');
+  });
+
+  // ADMIN: create user
+  document.getElementById('createUserBtn')?.addEventListener('click', async () => {
+    if (!isTeacher()) { alert('❌ Access denied'); return; }
+    const u = document.getElementById('newAdminUsername').value.trim();
+    const p = document.getElementById('newAdminPassword').value.trim();
+    const r = document.getElementById('newAdminRole').value;
+    if (!u || !p){ alert('⚠️ Username and password required'); return; }
+    if (p.length < 4){ alert('⚠️ Password must be 4+ characters'); return; }
+    
+    if (cachedUsers[u]){ alert('❌ Username exists'); return; }
+    
+    const newUser = {password:p, role:r, stats:{correct:0, wrong:0, streak:0, missed:[]}};
+    await cloudSaveUser(u, newUser);
+    cachedUsers[u] = newUser;
+    
+    document.getElementById('newAdminUsername').value = '';
+    document.getElementById('newAdminPassword').value = '';
+    await updateUserList();
+    alert(`✅ User "${u}" created in Cloud!`);
+  });
+
+  // ADMIN: reset user password
+  document.getElementById('resetPasswordBtn')?.addEventListener('click', async () => {
+    if (!isTeacher()) { alert('❌ Access denied'); return; }
+    const u = document.getElementById('resetUserSelect').value;
+    const nw = document.getElementById('resetNewPassword').value.trim();
+    if (!u){ alert('⚠️ Select a user'); return; }
+    if (!nw || nw.length < 4){ alert('⚠️ Password must be 4+ characters'); return; }
+    
+    cachedUsers[u].password = nw;
+    await cloudSaveUser(u, cachedUsers[u]);
+    
+    document.getElementById('resetUserSelect').value = '';
+    document.getElementById('resetNewPassword').value = '';
+    alert(`✅ Password reset for "${u}" in Cloud!`);
+  });
+
+  // Chat
+  document.getElementById('chatToggle').addEventListener('click', () => {
+    document.getElementById('chatWindow').classList.toggle('open');
+    if (document.getElementById('chatWindow').classList.contains('open')){ initChat(); document.getElementById('chatInput').focus(); }
+  });
+  document.getElementById('chatClose').addEventListener('click', () => document.getElementById('chatWindow').classList.remove('open'));
+});
+
+async function initApp(){
+  // Theme Settings
+  const savedColor = localStorage.getItem('rose_color') || 'purple';
+  document.documentElement.setAttribute('data-theme-color', savedColor);
+  if (localStorage.getItem('rose_theme') === 'dark'){
+    document.documentElement.setAttribute('data-theme','dark');
+    document.getElementById('darkModeToggle').innerHTML = '<i class="fas fa-sun"></i>';
+  }
+
+  // Voice setup
+  if (window.speechSynthesis){
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+  }
+
+  // Show/Hide Admin UI
+  if (isTeacher()){
+    document.getElementById('adminBadge').classList.remove('hidden');
+    document.getElementById('adminTabBtn').classList.remove('hidden');
+  } else {
+    document.getElementById('adminBadge').classList.add('hidden');
+    document.getElementById('adminTabBtn').classList.add('hidden');
+  }
+
+  loadNewWord();
+  await updateAllStats();
+  updateCategoryWordList('all');
+  if (isTeacher()) {
+    await updateUserList();
+  }
+}
+
+// Global functions for inline HTML onclicks
+window.removeMissedWord = removeMissedWord;
+window.deleteUser = deleteUser;
+window.selectCategory = selectCategory;
+window.startGame = startGame;
+window.endGame = endGame;
+window.speakWord = speakWord;
+window.checkMatch = checkMatch;
+window.checkGap = checkGap;
+window.checkBee = checkBee;
+window.checkCrossword = checkCrossword;
+window.checkWSCell = checkWSCell;
+window.checkBalloon = checkBalloon;
+window.guessLetter = guessLetter;
+window.checkWC = checkWC;
+window.resetWC = resetWC;
+window.checkMissing = checkMissing;
+
+console.log('🌹 Rose Spell Master v4.0 Cloud loaded!');
+</script>
+
+</body>
+</html>
